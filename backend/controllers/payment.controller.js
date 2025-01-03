@@ -1,5 +1,7 @@
 import Coupon from "../models/coupon.model.js"
 import {stripe} from "../lib/stripe.js"
+import Order from "../models/order.model.js"
+
 
 
 export const createCheckOutSession= async(req ,res)=>{
@@ -52,9 +54,18 @@ const lineItems  = products.map(product => {
             },
         ]
         :[],
-        metadata:{
+        metadata:{ //add additional information to the payment itself 
             userId:req.user._id.toString(),
-            couponCode:couponCode || ""
+            couponCode:couponCode || "",
+            products: JSON.stringify(
+                products.map((p)=>({
+             id: p._id,
+             quantity: p.quantity,
+             price: p.price
+
+                })
+            )
+            )
 
         }
     });
@@ -66,7 +77,7 @@ const lineItems  = products.map(product => {
         res.status(500).json({message:"server error", error:error.message})     
         
     }
-}
+    }
 
 async function createStripeCoupon(discountPercentage){
     const coupon = await stripe.coupons.create({
@@ -90,6 +101,57 @@ async function createNewCoupon(userId){
     })
 
     await newCoupon.save();
+}
+
+
+export const checkoutSuccess=async(req ,res)=>{
+
+
+    try {
+        const {sessionId}=req.body;
+        const session= await stripe.checkout.sessions.retrive(sessionId) //retrieving the session id
+        //used to fetch the details of that specific session from Stripe
+        if(session.payment_status=== "paid"){
+            if(session.metadata.coupon)
+            {
+                await Coupon.findOneAndUpdate({
+                    code:session.metadata.couponCode,
+                    userId:session.metadata.userId
+                },{
+                    isActive:false
+                })
+            }
+        }
+
+
+
+         //create new order
+
+        const products= JSON.parse(session.metadata.products)
+       const newOrder = new Order({
+        user:session.metadata.userId,
+        products: products.map(product => ({
+            product: product.id,
+            quantity: product.id,
+            quantity: product.quantity,
+            price: product.price
+        })),
+        totalAmount: session.amount_total/100,
+     stripeSessionId: sessionId
+       })
+     await newOrder.save();
+
+     res.status(200).json({success:true, message:" payment successful , order created and coupon deactivated if used", orderId: newOrder._id})
+
+        
+    } catch (error) {
+        console.log("error processing successful checkout", error)
+        res.status(500).json({message: "error processing successful checkout", error:error.message})
+        
+    }
+
+
+
 }
 
 
