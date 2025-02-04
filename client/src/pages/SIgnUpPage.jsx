@@ -6,7 +6,9 @@ import { motion } from "framer-motion";
 
 const SIgnUpPage = () => {
   const loading = false;
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({   //formdata-> holds user input values for the form. and
+    //setFormData is used to update the state whenever the user types in the form fields.
+
     name: "",
     email: "",
     password: "",
@@ -14,7 +16,8 @@ const SIgnUpPage = () => {
   });
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault();  //e.preventDefault() prevents the default form submission behavior (which reloads the page).
+
     console.log(formData);
   };
 
@@ -54,7 +57,7 @@ const SIgnUpPage = () => {
                   id="name"
                   type="text"
                   required
-                  value={formData.name}
+                  value={formData.name} //only fofr display purpose 
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
