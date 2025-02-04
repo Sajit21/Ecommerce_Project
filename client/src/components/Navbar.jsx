@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 // import { useCartStore } from "../stores/useCartStore";
 
 const Navbar = () => {
-  const user = false; //useUserStore();
-  const isAdmin = false; // user?.role === "admin";
+  const user = true; //useUserStore();
+  const isAdmin = true; // user?.role === "admin";
   // const { cart } = useCartStore();
 
   return (
