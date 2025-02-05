@@ -18,8 +18,7 @@ const SIgnUpPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();  //e.preventDefault() prevents the default form submission behavior (which reloads the page).
 
-    console.log(formData);
-  };
+    signup(formData);  };
 
   return (
     <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">

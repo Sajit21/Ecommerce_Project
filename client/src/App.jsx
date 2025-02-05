@@ -4,6 +4,7 @@ import SIgnUpPage from "./pages/SIgnUpPage";
 import { LoginPage } from "./pages/LoginPage";
 import Navbar from "./components/Navbar";
 import {LogOut} from "./pages/LogOut";
+import {Toaster} from 'react-hot-toast'
 
 // import { LogOut } from "lucide-react";
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/logout" element={<LogOut />} />
         </Routes>
       </div>
+      <Toaster />
     </div>
   );
 }
