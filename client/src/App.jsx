@@ -3,6 +3,9 @@ import HomePage from "./pages/HomePage";
 import SIgnUpPage from "./pages/SIgnUpPage";
 import { LoginPage } from "./pages/LoginPage";
 import Navbar from "./components/Navbar";
+import {LogOut} from "./pages/LogOut";
+
+// import { LogOut } from "lucide-react";
 
 function App() {
   return (
@@ -20,6 +23,7 @@ function App() {
           <Route path="/homepage" element={<HomePage />} />
           <Route path="/signup" element={<SIgnUpPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/logout" element={<LogOut />} />
         </Routes>
       </div>
     </div>
