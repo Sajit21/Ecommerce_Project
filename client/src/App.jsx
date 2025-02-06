@@ -1,17 +1,17 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import SIgnUpPage from "./pages/SIgnUpPage";
 import { LoginPage } from "./pages/LoginPage";
 import Navbar from "./components/Navbar";
-import {LogOut} from "./pages/LogOut";
-import {Toaster} from 'react-hot-toast'
+import { LogOut } from "./pages/LogOut";
+import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
 
 // import { LogOut } from "lucide-react";
 
 function App() {
-
-  const {user}=useUserStore()
+  const { user } = useUserStore();
+  console.log(user);
   return (
     // <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
     <div className="min-h-screen bg-[#1d0c3d] text-white relative overflow-hidden">
@@ -24,10 +24,10 @@ function App() {
       <div className="relative z-50 pt-20">
         <Navbar />
         <Routes>
-          <Route path="/homepage" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<SIgnUpPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/logout" element={user ? <HomePage /> :<LogOut />} />
+          <Route path="/logout" element={<LogOut />} />
         </Routes>
       </div>
       <Toaster />

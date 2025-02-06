@@ -22,7 +22,7 @@ export const useUserStore = create((get, set) => ({
         password,
       });
       set({ user: res.data, loading: false });
-      toast.success('signup successfully')
+      toast.success("signup successfully");
       console.log(res);
     } catch (error) {
       set({ loading: false });
@@ -31,20 +31,19 @@ export const useUserStore = create((get, set) => ({
     }
   },
 
-
-  login: async ({  email, password}) => {
-    console.log( email, password);
+  login: async ({ email, password, navigate }) => {
+    console.log(email, password);
     set({ loading: true });
 
-  
     try {
       const res = await axiosInstance.post("/auth/login", {
         email,
         password,
       });
       set({ user: res.data, loading: false });
-      if(res.status==200){
-        toast.success('user LoggedIn successfully')
+      if (res.status == 200) {
+        toast.success("user LoggedIn successfully");
+        navigate("/");
       }
       console.log(res);
     } catch (error) {
