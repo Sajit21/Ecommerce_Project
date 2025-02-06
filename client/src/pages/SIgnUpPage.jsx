@@ -7,7 +7,6 @@ import { useUserStore } from "../stores/useUserStore";
 
 
 const SIgnUpPage = () => {
-  const loading = false;
   const [formData, setFormData] = useState({   //formdata-> holds user input values for the form. and
     //setFormData is used to update the state whenever the user types in the form fields.
 
@@ -16,7 +15,7 @@ const SIgnUpPage = () => {
     password: "",
     confirmPassword: "",
   });
-   const {signup}= useUserStore()
+   const {signup,loading}= useUserStore()
   const handleSubmit = (e) => {
     e.preventDefault();  //e.preventDefault() prevents the default form submission behavior (which reloads the page).
     signup(formData);  };

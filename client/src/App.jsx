@@ -5,10 +5,13 @@ import { LoginPage } from "./pages/LoginPage";
 import Navbar from "./components/Navbar";
 import {LogOut} from "./pages/LogOut";
 import {Toaster} from 'react-hot-toast'
+import { useUserStore } from "./stores/useUserStore";
 
 // import { LogOut } from "lucide-react";
 
 function App() {
+
+  const {user}=useUserStore()
   return (
     // <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
     <div className="min-h-screen bg-[#1d0c3d] text-white relative overflow-hidden">
@@ -24,7 +27,7 @@ function App() {
           <Route path="/homepage" element={<HomePage />} />
           <Route path="/signup" element={<SIgnUpPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/logout" element={<LogOut />} />
+          <Route path="/logout" element={user ? <HomePage /> :<LogOut />} />
         </Routes>
       </div>
       <Toaster />

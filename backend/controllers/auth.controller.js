@@ -40,7 +40,7 @@ export const signup = async (req, res) => {
 		const userExists = await User.findOne({ email });
 
 		if (userExists) {
-			return res.status(400).json({ error: "Email already exists" });
+			return res.status(400).json({ error: "user already exists" });
 		}
 		const user = await User.create({ username, email, password });
 
@@ -58,13 +58,16 @@ export const signup = async (req, res) => {
 		});
 	} catch (error) {
 		console.log("Error in signup controller", error.message);
+		console.log("error hererer")
 		res.status(500).json({ message: error.message });
 	}
 };
 
 export const login = async (req, res) => {
 	try {
+
 		const { email, password } = req.body;
+		console.log(email,password)
 		const user = await User.findOne({ email });
 
 		if (user && (await user.comparePassword(password))) {
