@@ -3,21 +3,22 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { UserPlus, Mail, Lock, User, ArrowRight, Loader } from "lucide-react";
 import { motion } from "framer-motion";
+import { useUserStore } from "../stores/useUserStore";
+
 
 const SIgnUpPage = () => {
   const loading = false;
   const [formData, setFormData] = useState({   //formdata-> holds user input values for the form. and
     //setFormData is used to update the state whenever the user types in the form fields.
 
-    name: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
-
+   const {signup}= useUserStore()
   const handleSubmit = (e) => {
     e.preventDefault();  //e.preventDefault() prevents the default form submission behavior (which reloads the page).
-
     signup(formData);  };
 
   return (
@@ -56,9 +57,9 @@ const SIgnUpPage = () => {
                   id="name"
                   type="text"
                   required
-                  value={formData.name} //only fofr display purpose 
+                  value={formData.username} //only fofr display purpose 
                   onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
+                    setFormData({ ...formData, username: e.target.value })
                   }
                   className="block w-full px-3 py-2 pl-10 bg-gray-700 border border-gray-600 rounded-md shadow-sm
 									 placeholder-gray-400 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
