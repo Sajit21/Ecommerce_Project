@@ -6,11 +6,13 @@ import Navbar from "./components/Navbar";
 import { LogOut } from "./pages/LogOut";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
+import { useEffect } from "react";
 
 // import { LogOut } from "lucide-react";
 
 function App() {
-  const { user } = useUserStore();
+  const { user,checkAuth  } = useUserStore();
+  useEffect(()=>{checkAuth()},[checkAuth])
   console.log(user);
   return (
     // <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">

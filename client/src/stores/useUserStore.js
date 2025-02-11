@@ -10,18 +10,20 @@ export const useUserStore = create((get, set) => ({
 
   signup: async ({ username, email, password, confirmPassword }) => {
     set({ loading: true });
-
-    if (password != confirmPassword) {
+    if (password != confirmPassword) { //send data to backend
       set({ loading: false });
       return toast.error("passwords donot match");
     }
+
+    //VE- browser send request and server recives then server create a new user in db
+
     try {
       const res = await axiosInstance.post("/auth/signup", {
         username,
         email,
         password,
       });
-      set({ user: res.data, loading: false });
+      set({ user: res.data, loading: false });//store in zustand
       toast.success("signup successfully");
       console.log(res);
     } catch (error) {
@@ -52,4 +54,16 @@ export const useUserStore = create((get, set) => ({
       toast.error(error.response.data.message || "An error occurred");
     }
   },
+  checkAuth: async () => {
+    set({ checkingauth:trye });
+    try{
+      const res = await axiosInstance.get("/auth/profile")
+      set({user:res.dataa, checkingauth:false})
+    }
+    catch(error){
+      set({checkingauth:false, user:null})
+    }
+  }
+
+  
 }));
