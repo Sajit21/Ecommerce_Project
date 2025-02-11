@@ -11,8 +11,10 @@ import { useEffect } from "react";
 // import { LogOut } from "lucide-react";
 
 function App() {
-  const { user,checkAuth  } = useUserStore();
-  useEffect(()=>{checkAuth()},[checkAuth])
+  const { user, checkAuth } = useUserStore();
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
   console.log(user);
   return (
     // <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
@@ -27,7 +29,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<SIgnUpPage />} />
+          <Route
+            path="/signup"
+            element={!user ? <SIgnUpPage /> : <Navigate to="/" />}
+          />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/logout" element={<LogOut />} />
         </Routes>
