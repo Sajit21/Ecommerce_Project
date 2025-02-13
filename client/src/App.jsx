@@ -3,19 +3,24 @@ import HomePage from "./pages/HomePage";
 import SIgnUpPage from "./pages/SIgnUpPage";
 import { LoginPage } from "./pages/LoginPage";
 import Navbar from "./components/Navbar";
-import { LogOut } from "./pages/LogOut";
+import AdminPage from "./pages/AdminPage";
+// import { LogOut } from "./pages/LogOut";
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
 import { useEffect } from "react";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 // import { LogOut } from "lucide-react";
 
 function App() {
-  const { user, checkAuth } = useUserStore();
+  const { user,checkAuth,checkingAuth } = useUserStore();
+  console.log(checkingAuth)
   useEffect(() => {
-    checkAuth();
+     checkAuth();
   }, [checkAuth]);
-  console.log(user);
+
+  if(checkingAuth){
+    return <LoadingSpinner />}
   return (
     // <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
     <div className="min-h-screen bg-[#1d0c3d] text-white relative overflow-hidden">
@@ -28,13 +33,20 @@ function App() {
       <div className="relative z-50 pt-20">
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={!user?<LoginPage/>:<HomePage />} />
           <Route
             path="/signup"
             element={!user ? <SIgnUpPage /> : <Navigate to="/" />}
           />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/logout" element={<LogOut />} />
+          <Route
+            path="/login"
+            element={!user ? <LoginPage /> : <Navigate to="/" />}
+          />
+          {/* <Route path="/logout" element={<LogOut />} /> */}
+          <Route
+						path='/secret-dashboard'
+						element={user?.role === "admin" ? <AdminPage /> : <Navigate to='/login' />}
+					/>
         </Routes>
       </div>
       <Toaster />

@@ -75,6 +75,8 @@ export const login = async (req, res) => {
 			await storeRefreshToken(user._id, refreshToken);
 			setCookies(res, accessToken, refreshToken);
 
+			console.log('i am here')
+
 			res.json({
 				_id: user._id,
 				name: user.name,
@@ -82,6 +84,7 @@ export const login = async (req, res) => {
 		
     		role: user.role,
 			});
+			
 		} else {
 			res.status(400).json({ message: "Invalid email or password" });
 		}
@@ -187,13 +190,13 @@ export const refreshToken= async(req, res) =>{
 // 	}
 // };
 
-// export const getProfile = async (req, res) => {
-// 	try {
-// 		res.json(req.user);
-// 	} catch (error) {
-// 		res.status(500).json({ message: "Server error", error: error.message });
-// 	}
-// };
+export const getProfile = async (req, res) => {
+	try {
+		res.json(req.user);
+	} catch (error) {
+		res.status(500).json({ message: "Server error", error: error.message });
+	}
+};
 
 // accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzZkMDRkMjU4NjI1ODQ2ZDcyZmM2N2UiLCJpYXQiOjE3MzUyOTM2MjAsImV4cCI6MTczNTI5NDUyMH0.O4ZBRQYaVpwDjFYkF3l482faaXqjUjr-N6I7FoIYs3s; Path=/; HttpOnly; Expires=Fri, 27 Dec 2024 10:15:20 GMT;
 // accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzZkMDRkMjU4NjI1ODQ2ZDcyZmM2N2UiLCJpYXQiOjE3MzUyOTM2MjAsImV4cCI6MTczNTI5NDUyMH0.O4ZBRQYaVpwDjFYkF3l482faaXqjUjr-N6I7FoIYs3s; Path=/; HttpOnly; Expires=Fri, 27 Dec 2024 10:15:20 GMT;
